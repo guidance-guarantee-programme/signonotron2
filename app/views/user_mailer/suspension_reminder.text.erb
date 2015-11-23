@@ -4,8 +4,8 @@ Your <%= t('department.name') %> Signon <%= account_name %>, for <%= @user.email
 
 <% if instance_name.present? %>
 <%= account_name.humanize %> suspensions do not suspend production accounts or remove access to <%= t('department.name') %> production applications.
-<% end %>
 
+<% end %>
 If you don't need the account you can ignore these emails.
 
 To stop your account suspension you will need to sign in:
@@ -13,7 +13,3 @@ To stop your account suspension you will need to sign in:
 <%= new_user_session_url(protocol: 'https') %>
 
 If you’ve forgotten your passphrase, you can request a new one from the sign in screen.
-
-Read our blog post about suspending unused <%= t('department.name') %> accounts:
-
-https://insidegovuk.blog.gov.uk/2014/08/21/suspending-unused-gov-uk-accounts
