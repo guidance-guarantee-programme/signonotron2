@@ -1,3 +1,22 @@
+require 'sidekiq/api'
+require 'sidekiq/web'
+
+Sidekiq::Web.get '/rag' do
+  stats = Sidekiq::Stats.new
+
+  content_type :json
+
+  { item: [{ value: stats.failed, text: 'Failed' },
+           { value: stats.enqueued, text: 'Enqueued' },
+           { value: stats.processed, text: 'Processed' }] }.to_json
+end
+
+if ENV['SIDEKIQ_USERNAME'] && ENV['SIDEKIQ_PASSWORD']
+  Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+    username == ENV['SIDEKIQ_USERNAME'] && password == ENV['SIDEKIQ_PASSWORD']
+  end
+end
+
 Signonotron2::Application.routes.draw do
   use_doorkeeper
 
@@ -63,6 +82,9 @@ Signonotron2::Application.routes.draw do
   # Prototyping
   get '/phone-unavailable' => 'prototype#phone_unavailable'
   get '/recover-account'   => 'prototype#recover_account'
+
+  # Sidekiq
+  mount Sidekiq::Web => '/sidekiq'
 
   root to: 'root#index'
 end

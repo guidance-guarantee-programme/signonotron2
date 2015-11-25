@@ -44,7 +44,8 @@ gem 'statsd-ruby', '1.1.0'
 gem 'govuk_sidekiq', '0.0.3'
 gem 'activejob-retry'
 
-gem 'redis', '3.2.1'
+gem 'redis'
+gem 'redis-namespace'
 
 gem 'zeroclipboard-rails'
 
