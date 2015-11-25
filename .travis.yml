@@ -1,0 +1,11 @@
+cache:
+  bundler: true
+  directories:
+  - tmp/cache/assets/test
+group: edge
+language: ruby
+rvm:
+- 2.2.3
+sudo: false
+before_script: "./bin/rake db:setup RAILS_ENV=test"
+script: "./bin/rake RAILS_ENV=test"

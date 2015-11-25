@@ -78,14 +78,19 @@ Signonotron2::Application.configure do
   real_stdout = $stdout.clone
   $stdout.reopen($stderr)
 
-  config.logstasher.enabled = true
-  config.logstasher.logger = Logger.new(real_stdout)
-  config.logstasher.suppress_app_log = true
-
   config.action_mailer.default_url_options = {
     host: URI.parse(Plek.current.find('signon')).host,
     protocol: 'https'
   }
+
+  # Configure email delivery using Mailgun
+  config.action_mailer.smtp_settings = { port: ENV['MAILGUN_SMTP_PORT'],
+                                         address: ENV['MAILGUN_SMTP_SERVER'],
+                                         user_name: ENV['MAILGUN_SMTP_LOGIN'],
+                                         password: ENV['MAILGUN_SMTP_PASSWORD'],
+                                         domain: 'pensionwise.gov.uk',
+                                         authentication: :plain }
+
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 end

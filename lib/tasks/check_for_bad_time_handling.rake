@@ -3,7 +3,13 @@ task :check_for_bad_time_handling do
   matching_files = directories.select do |filename|
     match = false
     File.open(filename) do |file|
-      match = file.grep(%r{Time\.(now|utc|parse)}).any?
+      match = begin
+        File.readlines(file, encoding: 'UTF-8').grep(%r{Time\.(now|utc|parse)}).any?
+      rescue
+        $stderr.puts $!
+        $stderr.puts file.path
+        raise
+      end
     end
     match
   end
