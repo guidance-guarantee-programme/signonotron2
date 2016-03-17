@@ -2,13 +2,9 @@ task :check_for_bad_time_handling do
   directories = Dir.glob(File.join(Rails.root, '**', '*.rb'))
   matching_files = directories.select do |filename|
     match = false
-    File.open(filename) do |file|
-      match = begin
-        File.readlines(file, encoding: 'UTF-8').grep(%r{Time\.(now|utc|parse)}).any?
-      rescue
-        $stderr.puts $!
-        $stderr.puts file.path
-        raise
+    if filename !~ %r{/vendor/bundle/ruby/} # skip vendored gems
+      File.open(filename) do |file|
+        match = file.map(&:scrub).grep(%r{Time\.(now|utc|parse)}).any?
       end
     end
     match

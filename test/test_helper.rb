@@ -6,11 +6,8 @@ require 'shoulda/context'
 require 'webmock/minitest'
 require 'mocha/mini_test'
 
-require 'helpers/locale_helper'
-
 class ActiveSupport::TestCase
   include FactoryGirl::Syntax::Methods
-  extend LocaleHelper
 
   self.use_transactional_fixtures = false
 
@@ -36,7 +33,6 @@ require 'helpers/confirmation_token_helper'
 class ActionController::TestCase
   include Devise::TestHelpers
   include ConfirmationTokenHelper
-  extend LocaleHelper
 
   def sign_in(user)
     warden.stubs(authenticate!: user)
@@ -86,7 +82,6 @@ class ActionDispatch::IntegrationTest
   include UserHelpers
   include EmailHelpers
   include ConfirmationTokenHelper
-  extend LocaleHelper
 
   def assert_response_contains(content)
     assert page.has_content?(content), "Expected to find '#{content}' in:\n#{page.text}"
