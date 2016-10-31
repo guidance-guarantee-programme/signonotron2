@@ -15,7 +15,7 @@ class BatchInvitationUser < ActiveRecord::Base
         name: self.name,
         email: self.email,
         organisation_id: batch_invitation.organisation_id,
-        supported_permission_ids: supported_permission_ids,
+        supported_permission_ids: new_supported_permissions_for_user(supported_permission_ids),
       },
       inviting_user,
     )
@@ -34,21 +34,23 @@ class BatchInvitationUser < ActiveRecord::Base
   end
 
 private
-  def invite_user_with_attributes(sanitised_attributes, inviting_user)
-    if User.find_by_email(self.email)
-      self.update_column(:outcome, "skipped")
+  def new_supported_permissions_for_user(supported_permission_ids)
+    if user = User.find_by_email(self.email.to_s.downcase.strip)
+      supported_permission_ids | user.supported_permission_ids
     else
-      begin
-        user = User.invite!(sanitised_attributes, inviting_user)
-        if user.persisted?
-          self.update_column(:outcome, "success")
-        else
-          self.update_column(:outcome, "failed")
-        end
-      rescue StandardError => e
-        self.update_column(:outcome, "failed")
-      end
+      supported_permission_ids
     end
+  end
+
+  def invite_user_with_attributes(sanitised_attributes, inviting_user)
+    user = User.invite!(sanitised_attributes, inviting_user)
+    if user.persisted?
+      self.update_column(:outcome, "success")
+    else
+      self.update_column(:outcome, "failed")
+    end
+  rescue StandardError => e
+    self.update_column(:outcome, "failed")
   end
 
   def sanitise_attributes_for_inviting_user_role(raw_attributes, inviting_user)

@@ -38,7 +38,7 @@ class BatchInvitationUserTest < ActiveSupport::TestCase
         user = create(:batch_invitation_user, batch_invitation: @batch_invitation, email: 'a@m.com')
         user.invite(@inviting_user, [])
 
-        assert_equal "skipped", user.reload.outcome
+        assert_equal "success", user.reload.outcome
       end
     end
 
