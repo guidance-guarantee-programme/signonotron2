@@ -54,7 +54,7 @@ Signonotron2::Application.routes.draw do
   resource :user, only: [:show]
 
   resources :batch_invitations, only: [:new, :create, :show]
-  resources :organisations, only: [:index]
+  resources :organisations, only: [:index, :new, :create, :edit, :update]
   resources :suspensions, only: [:edit, :update]
 
   resources :doorkeeper_applications, only: [:index, :edit, :update] do

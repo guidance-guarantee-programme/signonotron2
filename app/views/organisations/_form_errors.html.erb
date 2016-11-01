@@ -1,0 +1,9 @@
+<% if @organisation.errors.count > 0 %>
+  <div class="alert alert-danger">
+    <ul>
+      <% @organisation.errors.full_messages.each do |message| %>
+        <%= content_tag :li, message, data: track_analytics_data(:danger, message) %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

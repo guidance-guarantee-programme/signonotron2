@@ -185,7 +185,9 @@ ActiveRecord::Schema.define(version: 20160420145549) do
     t.string   "otp_secret_key",               limit: 255
     t.integer  "second_factor_attempts_count", limit: 4,   default: 0
     t.string   "unlock_token",                 limit: 255
+    t.integer  "second_factor_attempts_count",             default: 0
     t.boolean  "require_2sv",                              default: false,    null: false
+    t.string   "unlock_token",                 limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
