@@ -22,3 +22,8 @@
   <%= f.label :organisation_type %>
   <%= f.text_field :organisation_type, class: 'form-control input-md-6' %>
 </p>
+
+<p class="form-group">
+  <%= f.label :parent_id, 'Parent Organisation' %>
+  <%= f.collection_select :parent_id, Organisation.allowed_parents(@organisation), :id, :name, { include_blank: true }, class: 'form-control input-md-6' %>
+</p>

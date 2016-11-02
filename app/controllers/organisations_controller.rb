@@ -43,7 +43,8 @@ class OrganisationsController < ApplicationController
       :name,
       :content_id,
       :abbreviation,
-      :organisation_type
+      :organisation_type,
+      :parent_id
     )
   end
 end

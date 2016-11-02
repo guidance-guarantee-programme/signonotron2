@@ -23,7 +23,20 @@ class SuperAdminApplicationEditTest < ActionDispatch::IntegrationTest
       click_button "Update Organisation"
 
       @organisation.reload
-      assert_match @organisation.name, 'New organisation name'
+      assert_equal @organisation.name, 'New organisation name'
+    end
+
+    should "be able set a parent organisation" do
+      parent_organisation = create(:organisation)
+
+      click_link @organisation.name
+
+      # set organisation parent
+      select parent_organisation.name, from: "Parent Organisation"
+      click_button "Update Organisation"
+
+      @organisation.reload
+      assert_equal @organisation.parent, parent_organisation
     end
   end
 end
