@@ -22,7 +22,7 @@ class BatchInvitingUsersTest < ActionDispatch::IntegrationTest
 
     user = create(:user, role: 'admin')
 
-    perform_batch_invite_with_user(user, new_application)
+    perform_batch_invite_with_user(user, new_application, last_email)
 
     fred.reload
     assert fred.has_access_to?(old_application)
@@ -38,7 +38,7 @@ class BatchInvitingUsersTest < ActionDispatch::IntegrationTest
 
     user = create(:user, role: 'admin')
 
-    perform_batch_invite_with_user(user, new_application, File.join(::Rails.root, 'test', 'fixtures', 'users-bad-cased-emails.csv'))
+    perform_batch_invite_with_user(user, new_application, false, File.join(::Rails.root, 'test', 'fixtures', 'users-bad-cased-emails.csv'))
 
     fred.reload
     assert fred.has_access_to?(old_application)
@@ -53,7 +53,7 @@ class BatchInvitingUsersTest < ActionDispatch::IntegrationTest
     perform_batch_invite_with_user(user, application)
   end
 
-  def perform_batch_invite_with_user(user, application, path = File.join(::Rails.root, 'test', 'fixtures', 'users.csv'))
+  def perform_batch_invite_with_user(user, application, expect_email = true, path = File.join(::Rails.root, 'test', 'fixtures', 'users.csv'))
     perform_enqueued_jobs do
       visit root_path
       signin_with(user)
@@ -69,6 +69,8 @@ class BatchInvitingUsersTest < ActionDispatch::IntegrationTest
       invited_user = User.find_by_email('fred@example.com')
       assert_not_nil invited_user
       assert invited_user.has_access_to?(application)
+
+      return unless expect_email
 
       assert_match /noreply-signon-development@.+\.gov\.uk/, last_email.from[0]
       assert_equal nil, last_email.reply_to[0]

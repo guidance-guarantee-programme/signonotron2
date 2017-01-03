@@ -73,6 +73,7 @@ group :test do
   gem 'capybara', '~> 2.5.0'
   gem 'capybara-email', '~> 2.4.0'
   gem 'poltergeist', '1.6.0'
+  gem 'phantomjs-binaries'
   gem 'database_cleaner', '1.5.0'
   gem 'factory_girl_rails', '~> 4.5.0'
   gem 'mocha', '1.1.0', require: false
