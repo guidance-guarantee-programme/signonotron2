@@ -3,11 +3,9 @@
 <p>Your <%= link_to t('department.name'), t('department.url') %> Signon <%= account_name %>, for <%= @user.email %>, has now been suspended and you won't be able to access any <%= link_to t('department.name'), t('department.url') %> <%= account_name %> applications, eg Whitehall Publisher or Licensing.</p>
 
 <% if instance_name.present? %>
-<p><%= account_name.humanize %> suspensions do not suspend production accounts or remove access to <%= link_to t('department.name'), t('department.url') %> production applications.</p>
+  <p><%= account_name.humanize %> suspensions do not suspend production accounts or remove access to <%= link_to t('department.name'), t('department.url') %> production applications.</p>
 <% end %>
 
 <p>If you don't need the account you can ignore this email.</p>
 
-<p>If you do still need the account you will have to contact a managing <%= link_to t('department.name'), t('department.url') %> editor in your organisation (or your parent organisation). They can use the support form to get help from the <%= link_to t('department.name'), t('department.url') %> team.</p>
-
-<p>Read our blog post about <%= link_to "suspending unused #{t('department.name')} accounts", 'https://insidegovuk.blog.gov.uk/2014/08/21/suspending-unused-gov-uk-accounts' %>.</p>
+<p>If you do still need the account you will have to contact your line manager.</p>

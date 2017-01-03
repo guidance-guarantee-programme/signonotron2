@@ -1,0 +1,16 @@
+en-pensionwise:
+  department:
+    name: 'Pension Wise'
+    url: 'https://www.gov.uk/'
+    full_name: ''
+  devise:
+    issuer: "Pension Wise Signon"
+  mailer:
+    app_name: "Pension Wise Signon %{instance_name}"
+    email_from_address:
+      instance: "noreply-signon-%{instance_name}@pensionwise.gov.uk"
+      no-instance: "noreply-signon@pensionwise.gov.uk"
+
+  noisy_batch_invitation_mailer:
+    to: "signon-alerts@pensionwise.gov.uk"
+

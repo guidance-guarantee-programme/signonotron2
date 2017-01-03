@@ -3,6 +3,13 @@ class OrganisationPolicy < BasePolicy
     current_user.superadmin? || current_user.admin? || current_user.organisation_admin?
   end
 
+  def new?
+    current_user.superadmin? || current_user.admin?
+  end
+  alias_method :create?, :new?
+  alias_method :edit?, :new?
+  alias_method :update?, :new?
+
   def can_assign?
     return true if current_user.superadmin? || current_user.admin?
     return current_user.organisation.subtree.pluck(:id).include?(record.id) if current_user.organisation_admin?

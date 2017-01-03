@@ -1,6 +1,11 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.7.1'
+gem 'sinatra', require: nil
+
+gem 'foreman'
+gem 'puma'
+
 gem 'kaminari', '~> 0.16.3'
 gem 'bootstrap-kaminari-views', '0.0.5'
 
@@ -14,9 +19,11 @@ gem 'rails-html-sanitizer', '1.0.3'
 
 gem 'nokogiri', '~> 1.6.6.4'
 
-gem 'airbrake', '3.1.15'
+gem 'bugsnag'
 gem 'plek', '1.7.0'
 gem 'json', '1.8.3'
+gem 'newrelic_rpm'
+gem 'whenever', '~> 0.9.4', require: false
 gem 'addressable', '~> 2.3.8'
 
 gem 'uuid'
@@ -35,11 +42,11 @@ gem 'ancestry', '2.0.0'
 
 gem 'gds-api-adapters', '20.1.1'
 gem 'statsd-ruby', '1.1.0'
-gem 'unicorn', '4.9.0'
 gem 'govuk_sidekiq', '0.0.3'
 gem 'activejob-retry'
 
-gem 'redis', '3.2.1'
+gem 'redis'
+gem 'redis-namespace'
 
 gem 'zeroclipboard-rails'
 
@@ -56,18 +63,17 @@ group :development do
 end
 
 group :development, :test do
-  gem 'jasmine', '2.1.0'
+  gem 'jasmine'
   gem 'govuk-lint', '~> 0.4'
   gem 'pry-byebug'
 end
-
-gem 'logstasher', '0.4.8'
 
 group :test do
   gem 'rspec-rails', '~> 3.3.3'
   gem 'capybara', '~> 2.5.0'
   gem 'capybara-email', '~> 2.4.0'
   gem 'poltergeist', '1.6.0'
+  gem 'phantomjs-binaries'
   gem 'database_cleaner', '1.5.0'
   gem 'factory_girl_rails', '~> 4.5.0'
   gem 'mocha', '1.1.0', require: false
@@ -76,4 +82,8 @@ group :test do
   gem 'ci_reporter', '1.7.0'
   gem 'timecop', '0.7.1'
   gem 'shoulda-context', '1.2.1', require: false
+end
+
+group :staging, :production do
+  gem 'rails_12factor'
 end

@@ -40,7 +40,7 @@ Signonotron2::Application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Set to :debug to see everything in the log.
   config.log_level = :info
@@ -50,7 +50,6 @@ Signonotron2::Application.configure do
 
   # Use a different logger for distributed setups.
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
-  config.logger = ActiveSupport::TaggedLogging.new(Logger.new($stderr))
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -75,17 +74,20 @@ Signonotron2::Application.configure do
 
   # Disable automatic flushing of the log to improve performance.
   # config.autoflush_log = false
-  real_stdout = $stdout.clone
-  $stdout.reopen($stderr)
-
-  config.logstasher.enabled = true
-  config.logstasher.logger = Logger.new(real_stdout)
-  config.logstasher.suppress_app_log = true
 
   config.action_mailer.default_url_options = {
     host: URI.parse(Plek.current.find('signon')).host,
     protocol: 'https'
   }
+
+  # Configure email delivery using Mailgun
+  config.action_mailer.smtp_settings = { port: ENV['MAILGUN_SMTP_PORT'],
+                                         address: ENV['MAILGUN_SMTP_SERVER'],
+                                         user_name: ENV['MAILGUN_SMTP_LOGIN'],
+                                         password: ENV['MAILGUN_SMTP_PASSWORD'],
+                                         domain: 'pensionwise.gov.uk',
+                                         authentication: :plain }
+
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 end

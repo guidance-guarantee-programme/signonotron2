@@ -8,6 +8,7 @@ require 'mocha/mini_test'
 
 class ActiveSupport::TestCase
   include FactoryGirl::Syntax::Methods
+
   self.use_transactional_fixtures = false
 
   def db_cleaner_start

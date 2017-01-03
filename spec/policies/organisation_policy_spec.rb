@@ -13,6 +13,16 @@ describe OrganisationPolicy do
     end
   end
 
+  permissions :new? do
+    it "is forbidden only for normal users" do
+      expect(subject).to permit(create(:superadmin_user), Organisation)
+      expect(subject).to permit(create(:admin_user), Organisation)
+
+      expect(subject).not_to permit(create(:organisation_admin), Organisation)
+      expect(subject).not_to permit(create(:user), Organisation)
+    end
+  end
+
   permissions :can_assign? do
     it "allows superadmins and admins to assign a user to any organisation" do
       expect(subject).to permit(create(:user_in_organisation, role: 'superadmin'), build(:organisation))

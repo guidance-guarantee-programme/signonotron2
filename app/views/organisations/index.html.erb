@@ -1,19 +1,31 @@
 <% content_for :title, "Organisations" %>
-<h1 class="page-title">Organisations</h1>
-<table class="table table-striped table-bordered">
+<div class="page-title clearfix remove-top-margin">
+  <h1 class="pull-left">Organisations</h1>
+  <div class="pull-right add-top-margin">
+    <%= link_to "Create organisation", new_organisation_path, class: "btn btn-success add-right-margin" %>
+  </div>
+</div>
+
+<table class="table table-striped table-bordered table-hover">
   <thead>
     <tr class="table-header">
       <th>Name</th>
+      <th>Slug</th>
+      <th>Content ID</th>
       <th>Abbreviation</th>
       <th>Organisation Type</th>
+      <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
     <% @organisations.each do |organisation| %>
       <tr>
-        <td><%= organisation.name %></td>
+        <td><%= link_to organisation.name, edit_organisation_path(organisation) %></td>
+        <td><%= organisation.slug %></td>
+        <td><%= organisation.content_id %></td>
         <td><%= organisation.abbreviation %></td>
         <td><%= organisation.organisation_type %></td>
+        <td><%= link_to 'Edit', edit_organisation_path(organisation) %></td>
       </tr>
     <% end %>
   </tbody>
