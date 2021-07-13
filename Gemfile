@@ -24,7 +24,7 @@ gem 'nokogiri', '>= 1.7.0.1'
 
 gem 'bugsnag'
 gem 'json'
-gem 'addressable', '~> 2.3.8'
+gem 'addressable', '~> 2.8.0'
 
 gem 'plek'
 gem 'whenever', '~> 0.9.4', require: false
