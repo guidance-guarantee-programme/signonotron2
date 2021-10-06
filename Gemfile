@@ -47,7 +47,7 @@ gem 'ancestry', '3.0.7'
 
 gem 'gds-api-adapters'
 gem 'statsd-ruby', '1.1.0'
-gem 'sidekiq', '~> 4.1.0'
+gem 'sidekiq', '~> 5.2.0'
 gem 'activejob-retry'
 
 gem 'redis'
