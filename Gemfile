@@ -42,7 +42,7 @@ gem 'rotp', '~> 2.1.1'
 gem 'rqrcode'
 
 # This change was made via Snyk to fix a vulnerability
-gem 'doorkeeper', '5.1.1'
+gem 'doorkeeper', '5.6.6'
 gem 'ancestry', '3.0.7'
 
 gem 'gds-api-adapters'
