@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby IO.read('.ruby-version').strip
 
 gem 'concurrent-ruby', '1.3.4'
-gem 'rails', '~> 6.1'
+gem 'rails', '~> 7.0'
 gem 'sinatra', require: nil
 
 gem 'foreman'
@@ -22,7 +22,7 @@ gem 'rails-html-sanitizer', '1.4.4'
 # This change was made via Snyk to fix a vulnerability
 gem 'nokogiri', '>= 1.7.0.1'
 
-gem 'addressable', '~> 2.8.0'
+gem 'addressable', '~> 2.8.9'
 gem 'bugsnag'
 gem 'json'
 
