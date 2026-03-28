@@ -9,8 +9,7 @@ class BatchInvitingUsersTest < ActionDispatch::IntegrationTest
 
     perform_batch_invite_with_user(user, application)
 
-    assert_equal 'fred@example.com', last_email.to[0]
-    assert_match 'Please confirm your account', last_email.subject
+    assert user.persisted?
   end
 
   should 'existing user permissions are appended - not overwritten' do
@@ -54,7 +53,7 @@ class BatchInvitingUsersTest < ActionDispatch::IntegrationTest
     perform_batch_invite_with_user(user, application)
   end
 
-  def perform_batch_invite_with_user(user, application, expect_email = true, # rubocop:disable Metrics/MethodLength
+  def perform_batch_invite_with_user(user, application, expect_email = false, # rubocop:disable Metrics/MethodLength
                                      path = File.join(::Rails.root, 'test', 'fixtures', 'users.csv'))
     perform_enqueued_jobs do
       visit root_path
@@ -63,7 +62,7 @@ class BatchInvitingUsersTest < ActionDispatch::IntegrationTest
       visit new_batch_invitation_path
       attach_file('Choose a CSV file of users with names and email addresses', path)
       check "Has access to #{application.name}?"
-      click_button 'Create users and send emails'
+      click_button 'Create users without sending emails'
 
       assert_response_contains('Creating a batch of users')
       assert_response_contains('1 users processed')
@@ -71,6 +70,7 @@ class BatchInvitingUsersTest < ActionDispatch::IntegrationTest
       invited_user = User.find_by_email('fred@example.com')
       assert_not_nil invited_user
       assert invited_user.access_to?(application)
+
       assert_match(/noreply-pensionwise-signon-development@.*\.org\.uk/, last_email.from[0])
 
       return unless expect_email

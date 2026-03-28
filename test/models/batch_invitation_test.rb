@@ -30,14 +30,12 @@ class BatchInvitationTest < ActiveSupport::TestCase
       assert_equal ['signin'], user.permissions_for(@app)
     end
 
-    should 'trigger an invitation email' do
+    should 'does not trigger an invitation email' do
       perform_enqueued_jobs do
         @bi.perform
 
         email = ActionMailer::Base.deliveries.last
-        assert_not_nil email
-        assert_equal 'Please confirm your account', email.subject
-        assert_equal ['b@m.com'], email.to
+        assert_nil email
       end
     end
 
@@ -56,8 +54,8 @@ class BatchInvitationTest < ActiveSupport::TestCase
         assert_not_nil User.find_by_email('b@m.com')
       end
 
-      should 'only send the invitation to the new user' do
-        assert_enqueued_jobs 1
+      should 'not send the invitation to the new user' do
+        assert_no_enqueued_jobs
       end
 
       should 'skip that user entirely, including not altering permissions' do
@@ -104,7 +102,7 @@ class BatchInvitationTest < ActiveSupport::TestCase
         @user_a.update_column(:outcome, 'success')
 
         @bi.perform
-        assert_enqueued_jobs 1
+        assert_no_enqueued_jobs
 
         # Assert user_a status hasn't been set to skipped.
         @user_a.reload

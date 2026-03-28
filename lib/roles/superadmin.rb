@@ -12,6 +12,7 @@ module Roles
         :confirmation_token,
         :role,
         :require_2sv,
+        :skip_invitation,
         { supported_permission_ids: [] }
       ]
     end

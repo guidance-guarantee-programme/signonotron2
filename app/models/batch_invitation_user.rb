@@ -16,7 +16,8 @@ class BatchInvitationUser < ActiveRecord::Base
         email:,
         organisation_id: batch_invitation.organisation_id,
         supported_permission_ids: new_supported_permissions_for_user(supported_permission_ids),
-        require_2sv: true
+        require_2sv: true,
+        skip_invitation: true
       },
       inviting_user
     )

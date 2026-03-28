@@ -17,7 +17,8 @@ class BatchInvitationUserTest < ActiveSupport::TestCase
                                                                  email: user.email,
                                                                  organisation_id: @batch_invitation.organisation_id,
                                                                  supported_permission_ids: [1, 2, 3],
-                                                                 require_2sv: true
+                                                                 require_2sv: true,
+                                                                 skip_invitation: true
                                                                })
       User.expects(:invite!).with(invitation_attributes, @inviting_user)
 

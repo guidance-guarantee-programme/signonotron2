@@ -11,6 +11,7 @@ module Roles
         :unconfirmed_email,
         :confirmation_token,
         :require_2sv,
+        :skip_invitation,
         { supported_permission_ids: [] }
       ]
     end
